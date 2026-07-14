@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 /**
  * Майя Галицкая — Внедрение ИИ в B2B-команды (v3)
@@ -14,6 +14,101 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
  */
 
 const TelegramLink = "https://t.me/takaya_maya";
+
+// Lightbox Component - fullscreen review viewer
+const Lightbox = ({ src, onClose }: { src: string; onClose: () => void }) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <button
+        className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+        onClick={onClose}
+        aria-label="Закрыть"
+      >
+        <X className="w-6 h-6" />
+      </button>
+      <img
+        src={src}
+        alt="Отзыв клиента"
+        className="max-w-full max-h-full rounded-lg shadow-2xl animate-in zoom-in-95 duration-300 object-contain"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  );
+};
+
+// Review Carousel Component - compact carousel with navigation arrows
+const ReviewCarousel = ({ images, onImageClick }: { images: string[]; onImageClick: (src: string) => void }) => {
+  const [current, setCurrent] = useState(0);
+
+  if (images.length === 1) {
+    return (
+      <img
+        src={images[0]}
+        alt="Отзыв клиента"
+        className="rounded-lg w-full h-40 object-cover object-top cursor-zoom-in hover:opacity-90 transition-opacity"
+        loading="lazy"
+        onClick={() => onImageClick(images[0])}
+      />
+    );
+  }
+
+  return (
+    <div className="relative">
+      <img
+        src={images[current]}
+        alt={`Отзыв клиента ${current + 1}`}
+        className="rounded-lg w-full h-40 object-cover object-top cursor-zoom-in hover:opacity-90 transition-opacity"
+        loading="lazy"
+        onClick={() => onImageClick(images[current])}
+      />
+      <button
+        className="absolute left-1 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1 shadow-md transition-colors"
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrent((prev) => (prev - 1 + images.length) % images.length);
+        }}
+        aria-label="Предыдущий отзыв"
+      >
+        <ChevronLeft className="w-4 h-4 text-gray-700" />
+      </button>
+      <button
+        className="absolute right-1 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-1 shadow-md transition-colors"
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrent((prev) => (prev + 1) % images.length);
+        }}
+        aria-label="Следующий отзыв"
+      >
+        <ChevronRight className="w-4 h-4 text-gray-700" />
+      </button>
+      <div className="flex justify-center gap-1.5 mt-2">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === current ? "bg-red-600" : "bg-gray-300"}`}
+            aria-label={`Отзыв ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // Quote Break Component
 const QuoteBreak = ({ text, highlight }: { text: string; highlight: string }) => (
@@ -38,6 +133,7 @@ const QuoteBreak = ({ text, highlight }: { text: string; highlight: string }) =>
 export default function Home() {
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
   const [showUrgency] = useState(true);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   const cases = [
     {
@@ -169,6 +265,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {lightboxSrc && <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />}
       {/* URGENCY BANNER */}
       {showUrgency && (
         <div className="bg-red-600 text-white py-3 px-4 text-center text-sm md:text-base font-semibold">
@@ -747,17 +844,11 @@ export default function Home() {
 
                   {(caseItem.review || caseItem.reviews) && (
                     <div className="mt-4 pt-4 border-t border-gray-200">
-                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Отзывы клиентов</p>
-                      {caseItem.review && (
-                        <img src={caseItem.review} alt="Отзыв клиента" className="rounded-lg w-full h-auto" loading="lazy" />
-                      )}
-                      {caseItem.reviews && (
-                        <div className="space-y-3">
-                          {caseItem.reviews.map((reviewUrl, idx) => (
-                            <img key={idx} src={reviewUrl} alt={`Отзыв клиента ${idx + 1}`} className="rounded-lg w-full h-auto" loading="lazy" />
-                          ))}
-                        </div>
-                      )}
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Отзывы клиентов · нажмите, чтобы увеличить</p>
+                      <ReviewCarousel
+                        images={caseItem.reviews ?? [caseItem.review as string]}
+                        onImageClick={(src) => setLightboxSrc(src)}
+                      />
                     </div>
                   )}
                 </div>
