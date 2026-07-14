@@ -819,7 +819,7 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
-              <img src="/manus-storage/maya_photo2_167503e9.png" alt="Майя Галицкая" className="rounded-lg w-64 h-auto object-cover" />
+              <img src="/manus-storage/maya_about_me_6a2adcf4.png" alt="Майя Галицкая" className="rounded-lg w-64 h-auto object-cover" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Майя Галицкая</h2>
 
@@ -949,7 +949,7 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
-              <img src="/manus-storage/maya_photo3_99bb6916.png" alt="Майя Галицкая" className="rounded-lg w-80 h-auto object-cover" />
+              <img src="/manus-storage/maya_final_cta_3ee3977e.png" alt="Майя Галицкая" className="rounded-lg w-80 h-auto object-cover" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
               Пока одни компании обсуждают, можно ли доверять ChatGPT, другие уже ускорили документы, аналитику и продажи.
