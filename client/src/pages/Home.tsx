@@ -706,7 +706,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {cases.map((caseItem) => (
-              <Card key={caseItem.num} className="p-6 bg-gray-50 border border-gray-200 hover:shadow-md transition-shadow">
+              <Card key={caseItem.num} className="p-6 bg-gray-50 border border-gray-200 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
                 {caseItem.nda && (
                   <div className="mb-3 inline-block bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded">
                     Под NDA
