@@ -37,6 +37,7 @@ const QuoteBreak = ({ text, highlight }: { text: string; highlight: string }) =>
 
 export default function Home() {
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
+  const [showUrgency] = useState(true);
 
   const cases = [
     {
@@ -52,6 +53,7 @@ export default function Home() {
       pointA: "аналитика, документы, обращения, отчётность — вручную. Внедрение инноваций тормозилось из-за отсутствия экспертизы.",
       whatDid: "крупное обучение на 100 человек — министр экономики, первый заместитель губернатора, заместители министров, руководители подразделений. Системная работа с ChatGPT, алгоритмы для больших данных, документов, исследований и стратегических задач, практикум по AI-ботам.",
       pointB: "ведомства применяют ИИ в аналитике, отчётности и коммуникациях. Созданы региональная программа поддержки предпринимательства с использованием ИИ и официальная обучающая программа Министерства экономики. Обучение стало отправной точкой цифровой экономики региона.",
+      review: "/manus-storage/tempImages9B3T8_a66ba0c8.jpg",
     },
     {
       num: 3,
@@ -147,6 +149,14 @@ export default function Home() {
       whatDid: "прикладной мастер-класс: применение ИИ в упаковке, обучении и продвижении; система ассистентов под ежедневные задачи (меню, просчёты, тексты, визуалы, консультации); создание лендингов и презентаций прямо на занятии; видеогенерация и визуальный контент.",
       pointB: "участники перешли на полноценное обучение, упаковывают продукты с помощью ИИ, сами создают сайты, презентации и видеоконтент без подрядчиков, используют персональных AI-ассистентов ежедневно.",
     },
+    {
+      num: 15,
+      title: "Бизнес-клуб Sibiryak.club",
+      pointA: "100+ предпринимателей с доходом от 30 млн ₽ нуждались в практических инструментах для внедрения ИИ в бизнес-процессы.",
+      whatDid: "выступление на клубе: инструменты внедрения ИИ, ИИ-агенты, применение нейросетей в бизнесе, практические инструменты и кейсы внедрения.",
+      pointB: "предприниматели получили рабочие инструменты и вдохновение для внедрения ИИ в свои компании, увидели конкретные примеры применения нейросетей в бизнес-процессах.",
+      reviews: ["/manus-storage/IMG_1491_ff4c9f95.jpg", "/manus-storage/IMG_1492_5061bee4.jpg"],
+    },
   ];
 
   const nextCase = () => {
@@ -159,6 +169,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* URGENCY BANNER */}
+      {showUrgency && (
+        <div className="bg-red-600 text-white py-3 px-4 text-center text-sm md:text-base font-semibold">
+          ⏰ Места ограничены: 3-4 проекта в месяц. Следующий старт: <span className="font-bold">1 августа</span>. Осталось <span className="font-bold">2 места</span>.
+        </div>
+      )}
       {/* БЛОК 1: HERO */}
       <section className="py-16 md:py-24 lg:py-32 bg-white">
         <div className="container">
@@ -176,13 +192,16 @@ export default function Home() {
               <p className="text-sm text-gray-600 italic">
                 «Россети» · Министерства Ростовской области · АСИ-групп · бизнес-клуб Reactor · MBA «Система» · «Аудит-Вела» · «ЛазерГраф» · международная логистика — и 12 000+ обученных человек
               </p>
-              <Button
-                size="lg"
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors"
-                onClick={() => window.location.href = TelegramLink}
-              >
-                Обсудить внедрение
-              </Button>
+              <div className="space-y-3">
+                <Button
+                  size="lg"
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors w-full md:w-auto"
+                  onClick={() => window.location.href = TelegramLink}
+                >
+                  Забронировать диагностику
+                </Button>
+                <p className="text-xs text-gray-500">Бесплатно, 30 минут. Поймем, сколько часов вы теряете на рутину.</p>
+              </div>
             </div>
             <div className="hidden lg:block">
               <img src="/manus-storage/maya_photo1_ea0854b5.png" alt="Майя Галицкая" className="rounded-lg w-full h-auto object-cover" />
@@ -208,24 +227,45 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              В большинстве компаний ИИ внедряют неправильно. Сотрудники не знают, как его использовать. Результата нет.
+              Средняя компания теряет <span className="text-red-600">15-20% производительности</span> на рутину, которую ИИ может решить за минуты.
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              Один сотрудник пишет посты через ChatGPT. Второй просит нейросеть собрать таблицу. Третий боится нажать не туда. Руководитель уверен, что «у нас уже используют ИИ». На самом деле в компании — хаотичные эксперименты без системы.
+              Вот как это выглядит в реальности:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {[
-              "Документы, отчёты, КП и презентации готовятся днями — хотя могут собираться за часы.",
-              "Сотрудники тратят часы на однотипную рутину, которую давно можно отдать ИИ.",
-              "Каждый работает с нейросетями по-своему. Единого стандарта нет.",
-              "Команда сопротивляется: «у нас специфика», «это не для нас», «нет времени учиться».",
-              "Руководитель понимает, что внедрять надо, но не понимает — с чего начать и где здесь деньги.",
-              "Уже пробовали мастер-класс: вдохновились, а через неделю все вернулись в Excel и ручные таблицы.",
-            ].map((pain, idx) => (
+              {
+                scenario: "Понедельник, 9:00",
+                problem: "Отчет нужен к 10:00 для встречи с инвесторами",
+                current: "Аналитик собирает данные вручную → опоздание",
+                cost: "Упущенная сделка: 500 000 ₽"
+              },
+              {
+                scenario: "Каждый день",
+                problem: "Отдел продаж обрабатывает заявки вручную",
+                current: "50 заявок × 20 мин = 16 часов ручной работы",
+                cost: "Потеря 10-15% лидов из-за задержек"
+              },
+              {
+                scenario: "Каждый месяц",
+                problem: "Маркетинг создает контент и аналитику",
+                current: "120 часов на документацию и отчеты",
+                cost: "Зарплата одного сотрудника впустую"
+              },
+              {
+                scenario: "Каждый квартал",
+                problem: "Руководитель не видит, где ИИ может помочь",
+                current: "Инвестиции в ИИ-инструменты без системы",
+                cost: "Потраченные деньги, нулевой результат"
+              },
+            ].map((item, idx) => (
               <Card key={idx} className="p-6 bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                <p className="text-gray-700 leading-relaxed">{pain}</p>
+                <p className="text-xs font-semibold text-red-600 uppercase tracking-wide mb-2">{item.scenario}</p>
+                <h4 className="font-semibold text-gray-900 mb-2">{item.problem}</h4>
+                <p className="text-sm text-gray-700 mb-3"><strong>Сейчас:</strong> {item.current}</p>
+                <p className="text-sm font-semibold text-red-600">💰 {item.cost}</p>
               </Card>
             ))}
           </div>
@@ -568,6 +608,7 @@ export default function Home() {
                   "Онлайн-школа: внедрение ИИ в маркетинг и продажи, +1200 лидов в месяц без увеличения рекламного бюджета.",
                 ],
                 getYou: "запись сессий, стратегический план (PDF/Notion), гайды, чек-листы, кастомный корпоративный AI-бот, контент-стратегию, поддержку.",
+                reviews: ["/manus-storage/tempImagefcOC06_f22b3906.jpg", "/manus-storage/tempImagelNq3Bv_7ac14765.jpg"],
               },
               {
                 title: "Тариф Light — для экспертов, специалистов, авторов курсов, фрилансеров",
@@ -647,7 +688,7 @@ export default function Home() {
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors"
               onClick={() => window.location.href = TelegramLink}
             >
-              Обсудить внедрение
+              Забронировать диагностику
             </Button>
           </div>
         </div>
@@ -663,98 +704,64 @@ export default function Home() {
             Не «провели обучение», а «изменили скорость работы». Точка А → точка Б.
           </p>
 
-          <div className="relative">
-            <Card className="p-8 bg-gray-50 border border-gray-200">
-              {cases[currentCaseIndex].nda && (
-                <div className="absolute top-4 right-4 bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded">
-                  Под NDA
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cases.map((caseItem) => (
+              <Card key={caseItem.num} className="p-6 bg-gray-50 border border-gray-200 hover:shadow-md transition-shadow">
+                {caseItem.nda && (
+                  <div className="mb-3 inline-block bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded">
+                    Под NDA
+                  </div>
+                )}
+                <div className="mb-2">
+                  <span className="text-xs font-semibold text-red-600 uppercase">Кейс {caseItem.num}</span>
                 </div>
-              )}
-              <div className="mb-4">
-                <span className="text-sm font-semibold text-gray-600">Кейс {cases[currentCaseIndex].num}</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">{cases[currentCaseIndex].title}</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">{caseItem.title}</h3>
 
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Точка А:</h4>
-                  <p className="text-gray-700">{cases[currentCaseIndex].pointA}</p>
-                </div>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1">Было:</p>
+                    <p className="text-gray-700">{caseItem.pointA}</p>
+                  </div>
 
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Что сделали:</h4>
-                  <p className="text-gray-700">{cases[currentCaseIndex].whatDid}</p>
-                </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1">Результат:</p>
+                    <p className="text-gray-700">
+                      {caseItem.highlight ? (
+                        <>
+                          {caseItem.pointB.split(caseItem.highlight).map((part, idx, arr) =>
+                            idx < arr.length - 1 ? (
+                              <span key={idx}>
+                                {part}
+                                <span className="text-red-600 font-semibold">{caseItem.highlight}</span>
+                              </span>
+                            ) : (
+                              <span key={idx}>{part}</span>
+                            )
+                          )}
+                        </>
+                      ) : (
+                        caseItem.pointB
+                      )}
+                    </p>
+                  </div>
 
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Точка Б:</h4>
-                  <p className="text-gray-700 mb-4">
-                    {cases[currentCaseIndex].highlight ? (
-                      <>
-                        {cases[currentCaseIndex].pointB.split(cases[currentCaseIndex].highlight!).map((part, idx, arr) =>
-                          idx < arr.length - 1 ? (
-                            <span key={idx}>
-                              {part}
-                              <span className="text-red-600 font-semibold">{cases[currentCaseIndex].highlight}</span>
-                            </span>
-                          ) : (
-                            <span key={idx}>{part}</span>
-                          )
-                        )}
-                      </>
-                    ) : (
-                      cases[currentCaseIndex].pointB
-                    )}
-                  </p>
-                  {cases[currentCaseIndex].review && (
-                    <img src={cases[currentCaseIndex].review} alt="Отзыв" className="rounded-lg w-full h-auto object-cover" />
-                  )}
-                  {cases[currentCaseIndex].reviews && (
-                    <div className="space-y-4">
-                      {cases[currentCaseIndex].reviews.map((reviewUrl, idx) => (
-                        <img key={idx} src={reviewUrl} alt={`Отзыв ${idx + 1}`} className="rounded-lg w-full h-auto object-cover" />
-                      ))}
+                  {(caseItem.review || caseItem.reviews) && (
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      {caseItem.review && (
+                        <img src={caseItem.review} alt="Отзыв" className="rounded w-full h-auto object-cover max-h-32" />
+                      )}
+                      {caseItem.reviews && (
+                        <div className="space-y-2">
+                          {caseItem.reviews.map((reviewUrl, idx) => (
+                            <img key={idx} src={reviewUrl} alt={`Отзыв ${idx + 1}`} className="rounded w-full h-auto object-cover max-h-32" />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              </div>
-            </Card>
-
-            <div className="flex justify-between items-center mt-6">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={prevCase}
-                className="border-gray-300 text-gray-700 hover:bg-gray-100"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </Button>
-
-              <div className="flex gap-2">
-                {cases.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentCaseIndex(idx)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      idx === currentCaseIndex ? "bg-red-600" : "bg-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={nextCase}
-                className="border-gray-300 text-gray-700 hover:bg-gray-100"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
-
-            <p className="text-center text-sm text-gray-600 mt-6">
-              Кейс {currentCaseIndex + 1} из {cases.length}
-            </p>
+              </Card>
+            ))}
           </div>
 
           <div className="text-center mt-12">
@@ -763,7 +770,7 @@ export default function Home() {
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors"
               onClick={() => window.location.href = TelegramLink}
             >
-              Хочу такой же результат
+              Забронировать диагностику
             </Button>
           </div>
         </div>
