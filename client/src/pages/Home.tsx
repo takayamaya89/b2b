@@ -204,7 +204,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden lg:block">
-              <img src="/manus-storage/maya_photo1_ea0854b5.png" alt="Майя Галицкая" className="rounded-lg w-full h-auto object-cover" />
+              <img src="/manus-storage/maya_hero_main_c7bf9d98.png" alt="Майя Галицкая" className="rounded-lg w-full h-auto object-cover" />
             </div>
           </div>
         </div>
