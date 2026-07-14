@@ -63,7 +63,7 @@ export default function Home() {
       pointA: "крупнейшее сообщество предпринимателей на Юге России с оборотом резидентов от 50 000 000 ₽. Запрос — перевести резидентов от интереса к ИИ к применению в бизнес-процессах.",
       whatDid: "два интенсивных занятия по 8 часов для резидентов + специализированные мини-программы по работе с маркетплейсами, командой и аналитикой.",
       pointB: "резиденты внедрили инструменты ИИ в свои бизнес-процессы. Обратная связь: С тобой мы заглянули в завтра своих бизнесов. Увидели то, что станет стандартом для многих в ближайшем будущем.",
-      reviews: ["/manus-storage/reactor_review_af6c80ee.jpg", "/manus-storage/tempImageoReLYp_c37d65d4.jpg"],
+      review: "/manus-storage/tempImageoReLYp_c37d65d4.jpg",
     },
     {
       num: 4,
@@ -72,7 +72,7 @@ export default function Home() {
       whatDid: "полноценное обучение команды: системная работа с большими объёмами данных через GPT, собственные AI-ассистенты и боты, промптовые алгоритмы для контента, анализ и исследования через нейросети.",
       pointB: "создание контента ускорилось в 3–5 раз, внедрены AI-боты для студентов, исследования и стратегические задачи ведутся через GPT, качество коммуникаций выросло, команда экономит десятки часов в неделю. Занятия Майи — обязательная часть программы МБИ и Школы управления бизнесом «Система».",
       highlight: "3–5 раз",
-      reviews: ["/manus-storage/mba_review_395d53e6.jpg", "/manus-storage/tempImagegl0sjG_66038736.jpg"],
+      review: "/manus-storage/tempImagegl0sjG_66038736.jpg",
     },
     {
       num: 5,
@@ -747,13 +747,14 @@ export default function Home() {
 
                   {(caseItem.review || caseItem.reviews) && (
                     <div className="mt-4 pt-4 border-t border-gray-200">
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Отзывы клиентов</p>
                       {caseItem.review && (
-                        <img src={caseItem.review} alt="Отзыв" className="rounded w-full h-auto object-cover max-h-32" />
+                        <img src={caseItem.review} alt="Отзыв клиента" className="rounded-lg w-full h-auto" loading="lazy" />
                       )}
                       {caseItem.reviews && (
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           {caseItem.reviews.map((reviewUrl, idx) => (
-                            <img key={idx} src={reviewUrl} alt={`Отзыв ${idx + 1}`} className="rounded w-full h-auto object-cover max-h-32" />
+                            <img key={idx} src={reviewUrl} alt={`Отзыв клиента ${idx + 1}`} className="rounded-lg w-full h-auto" loading="lazy" />
                           ))}
                         </div>
                       )}
